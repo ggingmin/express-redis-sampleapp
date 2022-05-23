@@ -25,4 +25,4 @@ await client
     });
 
 export const studentRepository = client.fetchRepository(schema);
-await studentRepository.createIndex();
+// await studentRepository.createIndex();
