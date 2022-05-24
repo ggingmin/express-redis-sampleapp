@@ -1,11 +1,11 @@
 import { Router } from "express";
-import { studentRepository as repository } from "./student.repository.js";
+import { studentRepository } from "../om/student.js";
 
 export const router = Router();
 
 router.put('/', async (req, res) => {
 
-    const student = repository.createEntity();
+    const student = await studentRepository.createEntity();
 
     student.student_num = req.body.student_num ?? null;
     student.name = req.body.name ?? null;
@@ -15,7 +15,7 @@ router.put('/', async (req, res) => {
     student.graduated = req.body.graduated ?? null;
     student.entrance_date = req.body.entrance_date ?? null;
 
-    const id = await repository.save(student);
+    const id = await studentRepository.save(student);
 
     if (id) {
         res.send(id);
@@ -29,7 +29,7 @@ router.put('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
 
-    const student = await repository.fetch(req.params.id)
+    const student = await studentRepository.fetch(req.params.id)
 
     if (student) {
         res.send(student);

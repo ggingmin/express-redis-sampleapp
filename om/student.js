@@ -1,6 +1,5 @@
-import { Entity, Schema, Client, Repository } from "redis-om";
-import dotenv from 'dotenv';
-dotenv.config();
+import { Entity, Schema } from "redis-om";
+import client from "./client.js";
 
 class Student extends Entity {}
 const schema = new Schema(Student, {
@@ -13,7 +12,6 @@ const schema = new Schema(Student, {
     entrance_date: { type: 'date' }
 });
 
-const client = new Client();
 await client
     .open(`redis://${process.env.DB_HOST}:${process.env.DB_PORT}`)
     .then(() => {
@@ -25,4 +23,4 @@ await client
     });
 
 export const studentRepository = client.fetchRepository(schema);
-// await studentRepository.createIndex();
+await studentRepository.createIndex();
